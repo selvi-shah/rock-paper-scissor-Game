@@ -36,9 +36,7 @@ const showWinner = (userWin, userChoice, compChoice) => {
 };
 
 const playGame = (userChoice) => {
-   console.log(`user choice is ${userChoice}`);
    const compChoice = genCompChoice();
-   console.log(`comp choice is ${compChoice}`);
 
    if (userChoice === compChoice) {
         isDraw();
@@ -46,7 +44,7 @@ const playGame = (userChoice) => {
     let userWin = true;
         if(userChoice === "rock") {
             // scissors, paper
-            userWin = compChoice === "paper" ? false : true;
+            userWin = compChoice === "paper" ? true : true;
         } else if(userChoice === "paper"){
             // rock, scissors
             userWin = compChoice === "scissors" ? false : true;
