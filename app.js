@@ -1,0 +1,68 @@
+let userScore = 0;
+let compScore = 0;
+
+const choices = document.querySelectorAll(".choice");
+const msg = document.querySelector("#msg");
+const userScorePara = document.querySelector("#user-score");
+const compScorePara = document.querySelector("#comp-score");
+
+
+const genCompChoice = () => {
+    const options = ["stone", "paper", "scissors"];
+    const randomIdx = Math.floor(Math.random() * 3);
+    return options[randomIdx];
+};
+
+// If game will draw in that case....
+const isDraw = () => {
+    msg.innerText = "Game was draw. Play again";
+    msg.style.backgroundColor = "#155b7e";
+
+
+};
+
+const showWinner = (userWin, userChoice, compChoice) => {
+    if(userWin) {
+        userScore++;
+        userScorePara.innerText = userScore;
+        msg.innerText = `You win! Your ${userChoice} beats ${compChoice}`;
+        msg.style.backgroundColor = "green";
+    } else {
+        compScore++;
+        compScorePara.innerText = compScore;
+        msg.innerText = `You Lose! ${compChoice} beats your ${userChoice}`;
+        msg.style.backgroundColor = "red";
+    }
+};
+
+const playGame = (userChoice) => {
+   console.log(`user choice is ${userChoice}`);
+   const compChoice = genCompChoice();
+   console.log(`comp choice is ${compChoice}`);
+
+   if (userChoice === compChoice) {
+        isDraw();
+   } else {
+    let userWin = true;
+        if(userChoice === "stone") {
+            // scissors, paper
+            userWin = compChoice === "paper" ? false : true;
+        } else if(userChoice === "paper"){
+            // stone, scissors
+            userWin = compChoice === "scissors" ? true : false;
+        } else {
+            // stone, paper
+            userWin = compChoice === "scissors" ? false : true;
+        }
+        showWinner(userWin, userChoice, compChoice);
+   }
+};
+
+
+// To Track User Choice 
+choices.forEach((choice) => {
+    choice.addEventListener("click", () => {
+        const userChoice = choice.getAttribute("id");
+        playGame(userChoice);
+    });
+});
